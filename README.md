@@ -5,7 +5,13 @@ Ce répertoire contient une liste d'outil afin de rapidement réinstaller un ser
 Je fais ça pour apprendre, je ne suis en aucun responsable d'une perte de donnée / faille de sécurité (sauf sur mon propre serveur).
 
 ## Installation du serveur
-Copiez le répertoire et exécuter `server-installation.sh`
+Basiquement, copiez le répertoire et exécuter `server-install.sh`
+```
+git pull https://github.com/lucagoc/mc-server-tools.git
+cd mc-server-tools
+chmod +x server-install.sh
+./server-install.sh
+```
 
 ## Sauvegarde du serveur
 Par défaut un service est actif pour faire une sauvegarde tous les matins à 2h (et reboot le serveur au passage).
