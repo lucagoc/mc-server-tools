@@ -1,7 +1,18 @@
 #!/bin/bash
 
-install_path="/opt/mc-server"
+install_path="/opt/mc-server" # Pas de / après le chemin svp
 current_user=$USER
+backup_server1="mega1"
+backup_server1="mega2"
+
+echo "   _____           _       _         _ _ _           _        _ _       _   _             ";
+echo "  / ____|         (_)     | |       | ( |_)         | |      | | |     | | (_)            ";
+echo " | (___   ___ _ __ _ _ __ | |_    __| |/ _ _ __  ___| |_ __ _| | | __ _| |_ _  ___  _ __  ";
+echo "  \___ \ / __| '__| | '_ \| __|  / _\` | | | '_ \/ __| __/ _\` | | |/ _\` | __| |/ _ \| '_ \ ";
+echo "  ____) | (__| |  | | |_) | |_  | (_| | | | | | \__ \ || (_| | | | (_| | |_| | (_) | | | |";
+echo " |_____/ \___|_|  |_| .__/ \__|  \__,_| |_|_| |_|___/\__\__,_|_|_|\__,_|\__|_|\___/|_| |_|";
+echo "                    | |                                                                   ";
+echo "                    |_|                                                                   ";
 
 # Preconfig
 echo "Démarrage de la configuration du serveur"
@@ -57,28 +68,38 @@ sudo -u mc-backup rclone config
 echo "(5/7) Restauration de la backup depuis le serveur... "
 sudo mkdir $install_path
 sudo chown $current_user:$current_user $install_path
-rclone copy mega: $install_path
+
+while true; do
+    echo "Voulez-vous restaurer depuis le serveur 1 ou 2 ?"
+    read choix
+
+    if [ "$choix" == "1" ]; then
+        echo "sudo -u mc-backup rclone copy $backup_server1: $install_path"
+        break
+    elif [ "$choix" == "2" ]; then
+        echo "sudo -u mc-backup rclone copy $backup_server2: $install_path"
+        break
+    else
+        echo "Choix invalide. Veuillez réessayer."
+    fi
+done
 
 # Attribution des autorisations d'execution sur les lanceurs
 echo "(6/7) Attributions des autorisations d'exécutions sur les scripts de démarrage... "
-
-# Applique la permission 760 à tous les dossiers, puis changer les owner + Ajout d'un groupe
 chown -R velocity:mc-server  $install_path/velocity
 chown -R mc-lobby:mc-server  $install_path/mc-lobby
 chown -R mc-survie:mc-server $install_path/mc-survie
-chmod -R 760 $install_path
+chmod -R 760 $install_path/*
 
 # Copie et activation des services de lancement automatique
 echo "(7/7) Création des services et activation... "
-
 sudo cp ./services/* /etc/systemd/system/
-
 sudo systemctl enable velocity.service
 sudo systemctl enable mc-lobby.service
 sudo systemctl enable mc-survie.service
 sudo systemctl enable mc-backup.timer
 
 # Fin
-echo "--> Terminé ! Redémarrage du serveur dans 60s..."
+echo "--> Terminé ! Redémarrage complet du serveur dans 60s..."
 sleep 60
 sudo reboot
