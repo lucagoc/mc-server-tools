@@ -1,0 +1,14 @@
+[Unit]
+Description=Backup MCserver files with online cloud services via RClone using scripts.
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+UMask=007
+ExecStart=/home/ubuntu/do-server-backup.sh
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
