@@ -4,11 +4,8 @@ After=network-online.target
  
 [Service]
 Type=simple
- 
-User=ubuntu
-Group=ubuntu
-UMask=007
- 
+User=mc-survie
+Group=mc-survie
 ExecStart=/home/ubuntu/MCserver/survie/start.sh
 
 Restart=on-failure

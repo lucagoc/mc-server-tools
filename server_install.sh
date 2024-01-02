@@ -1,11 +1,11 @@
 #!/bin/bash
 
 install_path="/opt/mc-server"
+current_user=$USER
 
 # Preconfig
 echo "Démarrage de la configuration du serveur"
 echo "Note: Cette opération peut prendre plusieurs dizaines de minutes !"
-cd /home/ubuntu/
 sleep 3
 
 # Installation des dépendances
@@ -44,16 +44,17 @@ rclone config
 # Restauration de la backup
 echo "(5/7) Restauration de la backup depuis le serveur... "
 sudo mkdir $install_path
-sudo chown ubuntu:ubuntu $install_path
+sudo chown $current_user:$current_user $install_path
 rclone copy mega: $install_path
 
 # Attribution des autorisations d'execution sur les lanceurs
 echo "(6/7) Attributions des autorisations d'exécutions sur les scripts de démarrage... "
-sudo adduser -r -s /bin/no-login velocity
-sudo adduser -r -s /bin/no-login mc-lobby
-sudo adduser -r -s /bin/no-login mc-survie
+sudo adduser --system --no-create-home --group velocity
+sudo adduser --system --no-create-home --group mc-backup
+sudo adduser --system --no-create-home --group mc-lobby
+sudo adduser --system --no-create-home --group mc-survie
 sudo groupadd mc-server
-sudo usermod -a -G mc-server ubuntu
+sudo usermod -a -G mc-server $current_user
 # Note: Ne pas ajouter les autres utilisateurs dans le même groupe, cela compromet l'isolement.
 
 # Applique la permission 760 à tous les dossiers, puis changer les owner + Ajout d'un groupe
@@ -64,9 +65,8 @@ chmod -R 760 $install_path
 
 # Copie et activation des services de lancement automatique
 echo "(7/7) Création des services et activation... "
-wget ...
 
-cp 
+sudo cp ./services/* /etc/systemd/system/
 
 sudo systemctl enable velocity.service
 sudo systemctl enable mc-lobby.service

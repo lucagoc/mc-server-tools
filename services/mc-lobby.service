@@ -4,11 +4,8 @@ After=network-online.target
  
 [Service]
 Type=simple
- 
-User=ubuntu
-Group=ubuntu
-UMask=007
- 
+User=mc-lobby
+Group=mc-lobby
 ExecStart=/home/ubuntu/MCserver/lobby/start.sh
 
 Restart=on-failure

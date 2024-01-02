@@ -4,8 +4,8 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-User=ubuntu
-Group=ubuntu
+User=mc-backup
+Group=mc-server
 UMask=007
 ExecStart=/home/ubuntu/do-server-backup.sh
 RemainAfterExit=no

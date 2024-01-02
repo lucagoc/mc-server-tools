@@ -1,16 +1,12 @@
 [Unit]
 Description=Velocity proxy daemon
 After=network-online.target
- 
+
 [Service]
 Type=simple
- 
-User=ubuntu
-Group=ubuntu
-UMask=007
- 
+User=velocity
+Group=velocity
 ExecStart=/home/ubuntu/MCserver/velocity/start.sh
-
 Restart=on-failure
  
 # Configures the time to wait before service is stopped forcefully.

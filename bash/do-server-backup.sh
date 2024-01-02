@@ -9,7 +9,7 @@ sudo systemctl stop mc-lobby
 sudo systemctl stop mc-survie
 
 # Synchronisation
-rclone sync ./MCserver/ mega: --delete-excluded -v
+rclone sync /opt/mc-server mega: --delete-excluded -v
 
 # Note :
 #   --delete-excluded permet de supprimer les fichiers qui ne sont plus présent à la source.
