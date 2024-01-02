@@ -100,6 +100,6 @@ sudo systemctl enable mc-survie.service
 sudo systemctl enable mc-backup.timer
 
 # Fin
-echo "--> Terminé ! Redémarrage complet du serveur dans 60s..."
+echo "--> Terminé ! Redémarrage complet du serveur dans 60s (CTRL-C pour annuler)..."
 sleep 60
 sudo reboot
