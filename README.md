@@ -7,7 +7,7 @@ Je fais ça pour apprendre, je ne suis en aucun responsable d'une perte de donn�
 ## Installation du serveur
 Basiquement, copiez le répertoire et exécuter `server-install.sh`
 ```
-git pull https://github.com/lucagoc/mc-server-tools.git
+git clone https://github.com/lucagoc/mc-server-tools.git
 cd mc-server-tools
 chmod +x server-install.sh
 ./server-install.sh
