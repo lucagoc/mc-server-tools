@@ -34,12 +34,24 @@ sudo firewall-cmd --reload
 # Installation de RClone
 echo "(3/7) Installation de Rclone..."
 wget https://rclone.org/install.sh
+chmod +x install.sh
 sudo ./install.sh
 rm install.sh
 
+# Création des utilisateurs
+echo "(3/7) Créations des utilisateurs..."
+sudo adduser --system --no-create-home --group velocity
+sudo adduser --system --no-create-home --group mc-backup
+sudo adduser --system --no-create-home --group mc-lobby
+sudo adduser --system --no-create-home --group mc-survie
+sudo groupadd mc-server
+sudo usermod -a -G mc-server $current_user
+sudo usermod -a -G mc-server mc-backup
+# Note: Ne pas ajouter les autres utilisateurs dans le même groupe, cela compromet l'isolement.
+
 # Setup de la configuration Rclone, cette partie n'est pas automatisée.
 echo "(4/7) Lancement de la configuration de Rclone... "
-rclone config
+sudo -u mc-backup rclone config
 
 # Restauration de la backup
 echo "(5/7) Restauration de la backup depuis le serveur... "
@@ -49,13 +61,6 @@ rclone copy mega: $install_path
 
 # Attribution des autorisations d'execution sur les lanceurs
 echo "(6/7) Attributions des autorisations d'exécutions sur les scripts de démarrage... "
-sudo adduser --system --no-create-home --group velocity
-sudo adduser --system --no-create-home --group mc-backup
-sudo adduser --system --no-create-home --group mc-lobby
-sudo adduser --system --no-create-home --group mc-survie
-sudo groupadd mc-server
-sudo usermod -a -G mc-server $current_user
-# Note: Ne pas ajouter les autres utilisateurs dans le même groupe, cela compromet l'isolement.
 
 # Applique la permission 760 à tous les dossiers, puis changer les owner + Ajout d'un groupe
 chown -R velocity:mc-server  $install_path/velocity
