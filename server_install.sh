@@ -23,7 +23,7 @@ sleep 3
 echo "(1/7) Installation des dépendances..."
 sudo apt update
 sudo apt upgrade
-sudo apt install firewalld openjdk17-jre-headless git unzip wget bash-completion
+sudo apt install firewalld openjdk17-jre-headless git unzip wget bash-completion mysql-server
 
 # Ouverture des ports
 echo "(2/7) Ouverture des ports..."
