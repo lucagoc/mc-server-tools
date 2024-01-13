@@ -5,7 +5,7 @@ history_file = "backup_history"
 selection_file = "server_selection"
 selection_number = $(head -c 1 "$selection_file")
 if [ "$selection_number" -ne 0 ] && [ "$selection_number" -ne 1 ]; then
-    echo "WARNING : Fichier $selection_file invalide. (Première fois ? ignorez-moi)"
+    echo "WARNING : Fichier $selection_file invalide. (Première fois ? Ignorez-moi!)"
 	selection_number = "0"
 fi
 
@@ -29,6 +29,9 @@ echo "(1/2) Fermeture des services... "
 sudo systemctl stop velocity
 sudo systemctl stop mc-lobby
 sudo systemctl stop mc-survie
+
+# Dump de la base de donnée des permissions
+sudo mariadb-dump minecraft > /opt/mc-server/backup_luckperms.sql
 
 # Synchronisation
 echo "(2/2) Synchronisation avec le serveur $server_name... "

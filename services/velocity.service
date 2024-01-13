@@ -6,7 +6,7 @@ After=network-online.target
 Type=simple
 User=velocity
 Group=velocity
-ExecStart=/home/ubuntu/MCserver/velocity/start.sh
+ExecStart=/opt/mc-server/velocity/start.sh
 Restart=on-failure
  
 # Configures the time to wait before service is stopped forcefully.

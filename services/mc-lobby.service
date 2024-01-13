@@ -6,7 +6,7 @@ After=network-online.target
 Type=simple
 User=mc-lobby
 Group=mc-lobby
-ExecStart=/home/ubuntu/MCserver/lobby/start.sh
+ExecStart=/opt/mc-server/lobby/start.sh
 
 Restart=on-failure
  

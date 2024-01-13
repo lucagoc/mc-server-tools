@@ -1,6 +1,7 @@
 #!/bin/bash
 
 install_path="/opt/mc-server" # Pas de / après le chemin svp
+DB_mdp="mon_mot_de_passe_super_secure"
 current_user=$USER
 backup_server1="mega1"
 backup_server1="mega2"
@@ -23,7 +24,7 @@ sleep 3
 echo "(1/7) Installation des dépendances..."
 sudo apt update
 sudo apt upgrade
-sudo apt install firewalld openjdk17-jre-headless git unzip wget bash-completion mysql-server
+sudo apt install firewalld openjdk17-jre-headless git unzip wget bash-completion mariadb-server netcat
 
 # Ouverture des ports
 echo "(2/7) Ouverture des ports..."
@@ -90,6 +91,10 @@ chown -R velocity:mc-server  $install_path/velocity
 chown -R mc-lobby:mc-server  $install_path/mc-lobby
 chown -R mc-survie:mc-server $install_path/mc-survie
 chmod -R 760 $install_path/*
+
+# Création de la base de donnée des permissions et restauration au besoin
+sudo mysql -e "CREATE DATABASE `minecraft`; CREATE USER 'luckperms'@'localhost' IDENTIFIED BY '$DB_mdp'; GRANT ALL ON minecraft.* TO 'luckperms'@'localhost';"
+sudo mariadb-dump minecraft < /opt/mc-server/backup_luckperms.sql
 
 # Copie et activation des services de lancement automatique
 echo "(7/7) Création des services et activation... "

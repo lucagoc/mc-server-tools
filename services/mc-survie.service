@@ -6,7 +6,7 @@ After=network-online.target
 Type=simple
 User=mc-survie
 Group=mc-survie
-ExecStart=/home/ubuntu/MCserver/survie/start.sh
+ExecStart=/opt/mc-server/survie/start.sh
 
 Restart=on-failure
  
